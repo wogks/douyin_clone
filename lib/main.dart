@@ -1,4 +1,4 @@
-import 'package:douyin_clone/screens/sign_up/sign_up_screen.dart';
+import 'package:douyin_clone/features/authentication/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
