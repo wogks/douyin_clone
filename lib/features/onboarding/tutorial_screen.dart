@@ -1,5 +1,6 @@
 import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
+import 'package:douyin_clone/features/main_navigation/main_navigation_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +41,16 @@ class _TutoriailScreenState extends State<TutoriailScreen> {
         showningPage = Page.second;
       });
     }
+  }
+
+  void _onEnterAppTap() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MainNavigationScreen(),
+      ),
+      (route) => false,
+    );
   }
 
   @override
@@ -110,8 +121,8 @@ class _TutoriailScreenState extends State<TutoriailScreen> {
               opacity: showningPage == Page.first ? 0 : 1,
               child: CupertinoButton(
                 color: Theme.of(context).primaryColor,
+                onPressed: _onEnterAppTap,
                 child: const Text('Enter the App!'),
-                onPressed: () {},
               ),
             ),
           ),
