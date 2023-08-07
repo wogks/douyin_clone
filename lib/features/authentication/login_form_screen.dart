@@ -1,6 +1,7 @@
 import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
 import 'package:douyin_clone/features/authentication/widgets/form_button.dart';
+import 'package:douyin_clone/features/onboarding/interests_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginFormScreen extends StatefulWidget {
@@ -16,6 +17,12 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const InterestsScreen(),
+          ),
+        );
       }
     }
   }
@@ -40,6 +47,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: 'Email',
                 ),
                 validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'please write ur email';
+                  }
                   return null;
                 },
                 onSaved: (newValue) {},
@@ -50,6 +60,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: 'Password',
                 ),
                 validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'please write ur email';
+                  }
                   return null;
                 },
                 onSaved: (newValue) {},
