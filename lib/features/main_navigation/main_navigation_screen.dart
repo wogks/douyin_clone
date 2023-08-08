@@ -2,6 +2,7 @@ import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
 import 'package:douyin_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:douyin_clone/features/main_navigation/widgets/post_video_button.dart';
+import 'package:douyin_clone/features/videos/video_timeline_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -53,7 +54,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            child: Container(),
+            child: const VideoTimelineScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
