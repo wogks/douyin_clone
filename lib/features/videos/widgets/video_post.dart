@@ -14,9 +14,15 @@ class VideoPost extends StatefulWidget {
   State<VideoPost> createState() => _VideoPostState();
 }
 
-class _VideoPostState extends State<VideoPost> {
+class _VideoPostState extends State<VideoPost>
+    with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset('assets/videos/video.mp4');
+
+  bool _isPaused = false;
+  late final AnimationController _animationController;
+
+  final _animationDuration = const Duration(milliseconds: 200);
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -37,6 +43,13 @@ class _VideoPostState extends State<VideoPost> {
   void initState() {
     super.initState();
     _initVideoPlayer();
+    _animationController = AnimationController(
+      vsync: this,
+      lowerBound: 1.0,
+      upperBound: 1.5,
+      value: 1.5,
+      duration: _animationDuration,
+    );
   }
 
   @override
@@ -54,9 +67,14 @@ class _VideoPostState extends State<VideoPost> {
   void _onTogglePause() {
     if (_videoPlayerController.value.isPlaying) {
       _videoPlayerController.pause();
+      _animationController.reverse();
     } else {
       _videoPlayerController.play();
+      _animationController.forward();
     }
+    setState(() {
+      _isPaused = !_isPaused;
+    });
   }
 
   @override
@@ -78,13 +96,26 @@ class _VideoPostState extends State<VideoPost> {
               onTap: _onTogglePause,
             ),
           ),
-          const Positioned.fill(
+          Positioned.fill(
               child: IgnorePointer(
             child: Center(
-              child: FaIcon(
-                FontAwesomeIcons.play,
-                color: Colors.white,
-                size: Sizes.size52,
+              child: AnimatedBuilder(
+                animation: _animationController,
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _animationController.value,
+                    child: child,
+                  );
+                },
+                child: AnimatedOpacity(
+                  opacity: _isPaused ? 1 : 0,
+                  duration: _animationDuration,
+                  child: const FaIcon(
+                    FontAwesomeIcons.play,
+                    color: Colors.white,
+                    size: Sizes.size52,
+                  ),
+                ),
               ),
             ),
           ))
