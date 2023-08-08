@@ -37,7 +37,26 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[_selectedIndex],
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0,
+            child: Container(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 1,
+            child: Container(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 3,
+            child: Container(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 4,
+            child: Container(),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Padding(
@@ -61,17 +80,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               NavTab(
                 text: 'Inbox',
-                isSelected: _selectedIndex == 2,
+                isSelected: _selectedIndex == 3,
                 icon: FontAwesomeIcons.message,
                 selectedIcon: FontAwesomeIcons.solidMessage,
-                onTap: () => _onTap(2),
+                onTap: () => _onTap(3),
               ),
               NavTab(
                 text: 'User',
-                isSelected: _selectedIndex == 3,
+                isSelected: _selectedIndex == 4,
                 icon: FontAwesomeIcons.user,
                 selectedIcon: FontAwesomeIcons.solidUser,
-                onTap: () => _onTap(3),
+                onTap: () => _onTap(4),
               ),
             ],
           ),
