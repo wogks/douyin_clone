@@ -1,3 +1,4 @@
+import 'package:douyin_clone/features/videos/widgets/video_post.dart';
 import 'package:flutter/material.dart';
 
 class VideoTimelineScreen extends StatefulWidget {
@@ -10,31 +11,35 @@ class VideoTimelineScreen extends StatefulWidget {
 class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   int _itemCount = 4;
 
-  final PageController _pageController = PageController();
+  final _scrollDuration = const Duration(milliseconds: 200);
+  final _scrollCurve = Curves.linear;
 
-  List<Color> colors = [
-    Colors.red,
-    Colors.blue,
-    Colors.yellow,
-    Colors.green,
-  ];
+  final PageController _pageController = PageController();
 
   void _onPageChange(int page) {
     _pageController.animateToPage(
       page,
-      curve: Curves.linear,
-      duration: const Duration(milliseconds: 100),
+      curve: _scrollCurve,
+      duration: _scrollDuration,
     );
     if (page == _itemCount - 1) {
       _itemCount = _itemCount + 4;
-      colors.addAll([
-        Colors.red,
-        Colors.blue,
-        Colors.yellow,
-        Colors.green,
-      ]);
+
       setState(() {});
     }
+  }
+
+  void _onVideoFinished() {
+    _pageController.nextPage(
+      curve: _scrollCurve,
+      duration: _scrollDuration,
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -45,9 +50,7 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
       itemCount: _itemCount,
       onPageChanged: _onPageChange,
       itemBuilder: (context, index) {
-        return Container(
-          color: colors[index],
-        );
+        return VideoPost(onVideoFinished: _onVideoFinished, index: index);
       },
     );
   }
