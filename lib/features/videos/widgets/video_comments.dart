@@ -30,6 +30,8 @@ class _VideoCommentsState extends State<VideoComments> {
     });
   }
 
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -57,56 +59,61 @@ class _VideoCommentsState extends State<VideoComments> {
           onTap: _stopWriting,
           child: Stack(
             children: [
-              ListView.separated(
-                separatorBuilder: (context, index) => Gaps.v20,
-                padding: const EdgeInsets.symmetric(
-                  vertical: Sizes.size10,
-                  horizontal: Sizes.size16,
-                ),
-                itemCount: 10,
-                itemBuilder: (context, index) => Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const CircleAvatar(
-                      radius: 18,
-                      child: Text('재한'),
-                    ),
-                    Gaps.h10,
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '정재한',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Sizes.size14,
-                              color: Colors.grey.shade500,
-                            ),
-                          ),
-                          Gaps.v3,
-                          const Text('안녕하세요 플러터 개발자 정재한입니다. 잘부탁드립니다.')
-                        ],
+              Scrollbar(
+                controller: _scrollController,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => Gaps.v20,
+                  padding: const EdgeInsets.only(
+                    top: Sizes.size10,
+                    left: Sizes.size16,
+                    right: Sizes.size16,
+                    bottom: Sizes.size96 + Sizes.size20,
+                  ),
+                  itemCount: 10,
+                  itemBuilder: (context, index) => Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const CircleAvatar(
+                        radius: 18,
+                        child: Text('재한'),
                       ),
-                    ),
-                    Gaps.v10,
-                    Column(
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.heart,
-                          size: Sizes.size20,
-                          color: Colors.grey.shade500,
+                      Gaps.h10,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '정재한',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: Sizes.size14,
+                                color: Colors.grey.shade500,
+                              ),
+                            ),
+                            Gaps.v3,
+                            const Text('안녕하세요 플러터 개발자 정재한입니다. 잘부탁드립니다.')
+                          ],
                         ),
-                        Gaps.v2,
-                        Text(
-                          '10k',
-                          style: TextStyle(
+                      ),
+                      Gaps.v10,
+                      Column(
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.heart,
+                            size: Sizes.size20,
                             color: Colors.grey.shade500,
                           ),
-                        )
-                      ],
-                    )
-                  ],
+                          Gaps.v2,
+                          Text(
+                            '10k',
+                            style: TextStyle(
+                              color: Colors.grey.shade500,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
               Positioned(
