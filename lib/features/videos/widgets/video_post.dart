@@ -1,4 +1,8 @@
+import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
+import 'package:douyin_clone/features/videos/widgets/video_bgm.dart';
+import 'package:douyin_clone/features/videos/widgets/video_button.dart';
+import 'package:douyin_clone/features/videos/widgets/video_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:video_player/video_player.dart';
@@ -18,6 +22,15 @@ class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
   final VideoPlayerController _videoPlayerController =
       VideoPlayerController.asset('assets/videos/video.mp4');
+  final String _bgmInfo = 'YB - 나는 나비 tiktok original bgm';
+  final List _tags = [
+    '#rock music',
+    '#tiktok',
+    '#sns',
+    '#clone',
+    '#port',
+    '#life',
+  ];
 
   bool _isPaused = false;
   late final AnimationController _animationController;
@@ -35,8 +48,9 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
-    setState(() {});
+    await _videoPlayerController.setLooping(true);
     _videoPlayerController.addListener(_onVideoChange);
+    setState(() {});
   }
 
   @override
@@ -97,28 +111,88 @@ class _VideoPostState extends State<VideoPost>
             ),
           ),
           Positioned.fill(
-              child: IgnorePointer(
-            child: Center(
-              child: AnimatedBuilder(
-                animation: _animationController,
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: _animationController.value,
-                    child: child,
-                  );
-                },
-                child: AnimatedOpacity(
-                  opacity: _isPaused ? 1 : 0,
-                  duration: _animationDuration,
-                  child: const FaIcon(
-                    FontAwesomeIcons.play,
-                    color: Colors.white,
-                    size: Sizes.size52,
+            child: IgnorePointer(
+              child: Center(
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child,
+                    );
+                  },
+                  child: AnimatedOpacity(
+                    opacity: _isPaused ? 1 : 0,
+                    duration: _animationDuration,
+                    child: const FaIcon(
+                      FontAwesomeIcons.play,
+                      color: Colors.white,
+                      size: Sizes.size52,
+                    ),
                   ),
                 ),
               ),
             ),
-          ))
+          ),
+          Positioned(
+              bottom: 20,
+              left: 10,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width - 20,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '@재한',
+                      style: TextStyle(
+                          fontSize: Sizes.size20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Gaps.v10,
+                    const VideoIntro(
+                      descText: 'JaeHan Tiktok clone',
+                      mainTextbold: FontWeight.normal,
+                    ),
+                    Gaps.v10,
+                    VideoIntro(
+                      descText: _tags.join(', '),
+                      mainTextbold: FontWeight.bold,
+                    ),
+                    VideoBgm(bgm: _bgmInfo)
+                  ],
+                ),
+              )),
+          const Positioned(
+            bottom: 20,
+            right: 10,
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.black,
+                  foregroundImage: NetworkImage(
+                      'https://avatars.githubusercontent.com/u/108786958?v=4'),
+                  child: Text('재한'),
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: '33k',
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidComment,
+                  text: '33k',
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: '33k',
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
