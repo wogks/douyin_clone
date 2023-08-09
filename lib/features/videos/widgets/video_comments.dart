@@ -1,3 +1,4 @@
+import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,12 +36,70 @@ class _VideoCommentsState extends State<VideoComments> {
                 icon: const FaIcon(FontAwesomeIcons.xmark))
           ],
         ),
-        body: ListView.builder(
+        body: ListView.separated(
+          separatorBuilder: (context, index) => Gaps.v20,
+          padding: const EdgeInsets.symmetric(
+            vertical: Sizes.size10,
+            horizontal: Sizes.size16,
+          ),
           itemCount: 10,
-          itemBuilder: (context, index) => Container(
-            child: const Text('asdwdwq'),
+          itemBuilder: (context, index) => Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const CircleAvatar(
+                radius: 18,
+                child: Text('재한'),
+              ),
+              Gaps.h10,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '정재한',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: Sizes.size14,
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+                    Gaps.v3,
+                    const Text('안녕하세요 플러터 개발자 정재한입니다. 잘부탁드립니다.')
+                  ],
+                ),
+              ),
+              Gaps.v10,
+              Column(
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.heart,
+                    size: Sizes.size20,
+                    color: Colors.grey.shade500,
+                  ),
+                  Gaps.v2,
+                  Text(
+                    '10k',
+                    style: TextStyle(
+                      color: Colors.grey.shade500,
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
         ),
+        bottomNavigationBar: BottomAppBar(
+            color: Colors.white,
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 18,
+                  backgroundColor: Colors.grey.shade500,
+                  foregroundColor: Colors.white,
+                  child: const Text('재한'),
+                )
+              ],
+            )),
       ),
     );
   }
