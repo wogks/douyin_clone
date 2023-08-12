@@ -1,12 +1,25 @@
 import 'package:douyin_clone/constants/sizes.dart';
 import 'package:douyin_clone/features/inbox/activity_screen.dart';
+import 'package:douyin_clone/features/inbox/chats_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class InboxScreen extends StatelessWidget {
+class InboxScreen extends StatefulWidget {
   const InboxScreen({super.key});
 
-  void _onDmPressed() {}
+  @override
+  State<InboxScreen> createState() => _InboxScreenState();
+}
+
+class _InboxScreenState extends State<InboxScreen> {
+  void _onDmPressed() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ChatsScreen(),
+      ),
+    );
+  }
 
   void _onAcvityTap(BuildContext context) {
     Navigator.push(
