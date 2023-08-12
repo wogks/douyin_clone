@@ -1,3 +1,4 @@
+import 'package:douyin_clone/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -13,8 +14,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          floating: true,
-          snap: true,
           pinned: true,
           stretch: true,
           backgroundColor: Colors.amber,
@@ -42,6 +41,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
           ),
           itemExtent: 100,
+        ),
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            childCount: 30,
+            (context, index) => Container(
+              color: Colors.blue[100 * (index % 9)],
+              child: Align(alignment: Alignment.center, child: Text('$index')),
+            ),
+          ),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 100,
+            mainAxisSpacing: Sizes.size20,
+            crossAxisSpacing: Sizes.size20,
+            childAspectRatio: 1,
+          ),
         ),
       ],
     );
