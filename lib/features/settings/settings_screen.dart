@@ -52,6 +52,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
               applicationVersion: '1.1',
               applicationLegalese: 'All rights reserved.',
             ),
+            ListTile(
+              title: const Text('Log out (iOS)'),
+              textColor: Colors.red,
+              onTap: () => showCupertinoDialog(
+                context: context,
+                builder: (context) {
+                  return CupertinoAlertDialog(
+                    title: const Text("Are you sure?"),
+                    content: const Text('I wish you come back'),
+                    actions: [
+                      CupertinoDialogAction(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('No'),
+                      ),
+                      CupertinoDialogAction(
+                        onPressed: () => Navigator.of(context).pop(),
+                        isDestructiveAction: true,
+                        child: const Text('Yes'),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            ListTile(
+              title: const Text('Log out (Material)'),
+              textColor: Colors.red,
+              onTap: () => showCupertinoDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text("Are you sure?"),
+                    content: const Text('I wish you come back'),
+                    actions: [
+                      CupertinoDialogAction(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('No'),
+                      ),
+                      CupertinoDialogAction(
+                        onPressed: () => Navigator.of(context).pop(),
+                        isDestructiveAction: true,
+                        child: const Text('Yes'),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            )
           ],
         ));
   }
