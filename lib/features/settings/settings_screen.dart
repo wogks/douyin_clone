@@ -79,7 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ListTile(
               title: const Text('Log out (Material)'),
               textColor: Colors.red,
-              onTap: () => showCupertinoDialog(
+              onTap: () => showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
@@ -94,6 +94,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onPressed: () => Navigator.of(context).pop(),
                         isDestructiveAction: true,
                         child: const Text('Yes'),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            ListTile(
+              title: const Text('Log out (Material, modal popup)'),
+              textColor: Colors.red,
+              onTap: () => showCupertinoModalPopup(
+                context: context,
+                builder: (context) {
+                  return CupertinoActionSheet(
+                    title: const Text("Are you sure?"),
+                    message: const Text('가지마세요 ㅠ'),
+                    actions: [
+                      CupertinoActionSheetAction(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text(
+                          'No Logout',
+                        ),
+                      ),
+                      CupertinoActionSheetAction(
+                        isDestructiveAction: true,
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text(
+                          'Yes',
+                        ),
                       ),
                     ],
                   );
