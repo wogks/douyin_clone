@@ -1,5 +1,5 @@
 import 'package:douyin_clone/constants/sizes.dart';
-import 'package:douyin_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:douyin_clone/features/authentication/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -20,27 +20,40 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
       title: 'Flutter Demo',
       theme: ThemeData(
-          splashColor: Colors.transparent,
-          textSelectionTheme: const TextSelectionThemeData(
-            cursorColor: Color(0xFFE9435A),
+        brightness: Brightness.light,
+        splashColor: Colors.transparent,
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+        ),
+        appBarTheme: const AppBarTheme(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: Sizes.size16 + Sizes.size2,
+            fontWeight: FontWeight.w600,
           ),
-          appBarTheme: const AppBarTheme(
-            foregroundColor: Colors.black,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            titleTextStyle: TextStyle(
-              color: Colors.black,
-              fontSize: Sizes.size16 + Sizes.size2,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          scaffoldBackgroundColor: Colors.white,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: false,
-          primaryColor: const Color(0xFFE9435A)),
-      home: const MainNavigationScreen(),
+        ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade50,
+        ),
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: false,
+        primaryColor: const Color(0xFFE9435A),
+      ),
+      darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: const Color(0xFFE9435A),
+          scaffoldBackgroundColor: Colors.black,
+          bottomAppBarTheme: BottomAppBarTheme(
+            color: Colors.grey.shade800,
+          )),
+      home: const SignUpScreen(),
     );
   }
 }
