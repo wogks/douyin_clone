@@ -1,20 +1,24 @@
 import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
-import 'package:douyin_clone/features/videos/widgets/video_bgm.dart';
 import 'package:douyin_clone/features/videos/widgets/video_button.dart';
 import 'package:douyin_clone/features/videos/widgets/video_comments.dart';
-import 'package:douyin_clone/features/videos/widgets/video_intro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends StatefulWidget {
   final Function onVideoFinished;
+
   final int index;
-  const VideoPost(
-      {super.key, required this.onVideoFinished, required this.index});
+
+  const VideoPost({
+    super.key,
+    required this.onVideoFinished,
+    required this.index,
+  });
 
   @override
   State<VideoPost> createState() => _VideoPostState();
@@ -22,22 +26,13 @@ class VideoPost extends StatefulWidget {
 
 class _VideoPostState extends State<VideoPost>
     with SingleTickerProviderStateMixin {
-  final VideoPlayerController _videoPlayerController =
-      VideoPlayerController.asset('assets/videos/video.mp4');
-  final String _bgmInfo = 'YB - 나는 나비 tiktok original bgm';
-  final List _tags = [
-    '#rock music',
-    '#tiktok',
-    '#sns',
-    '#clone',
-    '#port',
-    '#life',
-  ];
+  late final VideoPlayerController _videoPlayerController;
 
-  bool _isPaused = false;
+  final Duration _animationDuration = const Duration(milliseconds: 200);
+
   late final AnimationController _animationController;
 
-  final _animationDuration = const Duration(milliseconds: 200);
+  bool _isPaused = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -49,6 +44,8 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _initVideoPlayer() async {
+    _videoPlayerController =
+        VideoPlayerController.asset("assets/videos/video.mp4");
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     if (kIsWeb) {
@@ -62,6 +59,7 @@ class _VideoPostState extends State<VideoPost>
   void initState() {
     super.initState();
     _initVideoPlayer();
+
     _animationController = AnimationController(
       vsync: this,
       lowerBound: 1.0,
@@ -74,6 +72,7 @@ class _VideoPostState extends State<VideoPost>
   @override
   void dispose() {
     _videoPlayerController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -83,6 +82,9 @@ class _VideoPostState extends State<VideoPost>
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
+    }
+    if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
     }
   }
 
@@ -99,16 +101,14 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
-  void _onCommentTap(BuildContext context) async {
+  void _onCommentsTap(BuildContext context) async {
     if (_videoPlayerController.value.isPlaying) {
       _onTogglePause();
     }
     await showModalBottomSheet(
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Sizes.size32),
-      ),
       context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       builder: (context) => const VideoComments(),
     );
     _onTogglePause();
@@ -116,6 +116,7 @@ class _VideoPostState extends State<VideoPost>
 
   @override
   Widget build(BuildContext context) {
+    print(_videoPlayerController.value);
     return VisibilityDetector(
       key: Key("${widget.index}"),
       onVisibilityChanged: _onVisibilityChanged,
@@ -125,7 +126,7 @@ class _VideoPostState extends State<VideoPost>
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
                 : Container(
-                    color: Colors.amber,
+                    color: Colors.black,
                   ),
           ),
           Positioned.fill(
@@ -157,73 +158,63 @@ class _VideoPostState extends State<VideoPost>
               ),
             ),
           ),
-          Positioned(
-              bottom: 20,
-              left: 10,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width - 20,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      '@재한',
-                      style: TextStyle(
-                          fontSize: Sizes.size20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Gaps.v10,
-                    const VideoIntro(
-                      descText: 'JaeHan Tiktok clone',
-                      mainTextbold: FontWeight.normal,
-                    ),
-                    Gaps.v10,
-                    VideoIntro(
-                      descText: _tags.join(', '),
-                      mainTextbold: FontWeight.bold,
-                    ),
-                    VideoBgm(bgm: _bgmInfo)
-                  ],
+          const Positioned(
+            bottom: 20,
+            left: 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "@니꼬",
+                  style: TextStyle(
+                    fontSize: Sizes.size20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              )),
+                Gaps.v10,
+                Text(
+                  "This is my house in Thailand!!!",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+          ),
           Positioned(
             bottom: 20,
             right: 10,
             child: Column(
               children: [
-                GestureDetector(
-                  onTap: () {},
-                  child: const VideoButton(
-                    icon: FontAwesomeIcons.music,
-                    text: 'mute',
-                  ),
-                ),
-                Gaps.v24,
                 const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
                   foregroundImage: NetworkImage(
-                      'https://avatars.githubusercontent.com/u/108786958?v=4'),
-                  child: Text('재한'),
+                    "https://avatars.githubusercontent.com/u/3612017",
+                  ),
+                  child: Text("니꼬"),
                 ),
                 Gaps.v24,
                 const VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: '33k',
+                  text: "2.9M",
                 ),
                 Gaps.v24,
                 GestureDetector(
-                  onTap: () => _onCommentTap(context),
+                  onTap: () => _onCommentsTap(context),
                   child: const VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: '33k',
+                    text: "33K",
                   ),
                 ),
                 Gaps.v24,
                 const VideoButton(
                   icon: FontAwesomeIcons.share,
-                  text: '33k',
-                ),
+                  text: "Share",
+                )
               ],
             ),
           ),
