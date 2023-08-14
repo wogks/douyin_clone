@@ -52,72 +52,82 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 mainAxisSpacing: 10,
                 childAspectRatio: 9 / 20,
               ),
-              itemBuilder: (context, index) => Column(
-                children: [
-                  Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Sizes.size4),
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: 9 / 16,
-                      child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover,
-                        placeholder:
-                            '/Users/wogks/Desktop/flutterPT/douyin_clone/assets/image/ee.jpg',
-                        image:
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8dkWGo6GZS-vbF55vuOQV4SpwAbjFDKz3ig&usqp=CAU',
+              itemBuilder: (context, index) => LayoutBuilder(
+                builder: (context, constraints) => Column(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Sizes.size4),
                       ),
-                    ),
-                  ),
-                  Gaps.v10,
-                  const Text(
-                    ' asddj asddjasddj asddjasddjasddjasddjasddjasddjasddjasddj',
-                    style: TextStyle(
-                      fontSize: Sizes.size16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Gaps.v8,
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 12,
-                        backgroundImage: AssetImage(
-                            '/Users/wogks/Desktop/flutterPT/douyin_clone/assets/image/gimage.jpeg'),
-                        // backgroundImage: NetworkImage(
-                        //     'https://kormedi.com/wp-content/uploads/2022/04/ck_tica1010005154_l-580x387.jpg'),
-                      ),
-                      Gaps.h4,
-                      Expanded(
-                        child: Text(
-                          '저는 자신이 있습니다. 어떤 기능이든지 전부 만들 수 있습니다.',
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                      child: AspectRatio(
+                        aspectRatio: 9 / 16,
+                        child: FadeInImage.assetNetwork(
+                          fit: BoxFit.cover,
+                          placeholder:
+                              '/Users/wogks/Desktop/flutterPT/douyin_clone/assets/image/ee.jpg',
+                          image:
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8dkWGo6GZS-vbF55vuOQV4SpwAbjFDKz3ig&usqp=CAU',
                         ),
                       ),
-                      Gaps.h4,
-                      const FaIcon(
-                        FontAwesomeIcons.heart,
-                        size: Sizes.size14,
+                    ),
+                    Gaps.v10,
+                    const Text(
+                      ' asddj asddjasddj asddjasddjasddjasddjasddjasddjasddjasddj',
+                      style: TextStyle(
+                        fontSize: Sizes.size16,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Gaps.h2,
-                      Text(
-                        '3M',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Gaps.v8,
+                    if (constraints.maxWidth < 200 ||
+                        constraints.maxWidth > 250)
+                      DefaultTextStyle(
                         style: TextStyle(
                           color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 12,
+                              backgroundImage: AssetImage(
+                                  '/Users/wogks/Desktop/flutterPT/douyin_clone/assets/image/gimage.jpeg'),
+                              // backgroundImage: NetworkImage(
+                              //     'https://kormedi.com/wp-content/uploads/2022/04/ck_tica1010005154_l-580x387.jpg'),
+                            ),
+                            Gaps.h4,
+                            Expanded(
+                              child: Text(
+                                '어떤 기능이든지 전부 만들 수 있습니다.',
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Gaps.h4,
+                            const FaIcon(
+                              FontAwesomeIcons.heart,
+                              size: Sizes.size14,
+                            ),
+                            Gaps.h2,
+                            Text(
+                              '3M',
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             for (var tab in tabs.skip(1))
