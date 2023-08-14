@@ -1,3 +1,4 @@
+import 'package:douyin_clone/constants/break_point.dart';
 import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +15,7 @@ class DiscoverScreen extends StatefulWidget {
 class _DiscoverScreenState extends State<DiscoverScreen> {
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -44,8 +46,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             GridView.builder(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               padding: const EdgeInsets.all(Sizes.size6),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: width > Breakpoints.lg ? 5 : 2,
                 crossAxisSpacing: Sizes.size10,
                 mainAxisSpacing: 10,
                 childAspectRatio: 9 / 20,
@@ -83,8 +85,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                     children: [
                       const CircleAvatar(
                         radius: 12,
-                        backgroundImage: NetworkImage(
-                            'https://kormedi.com/wp-content/uploads/2022/04/ck_tica1010005154_l-580x387.jpg'),
+                        backgroundImage: AssetImage(
+                            '/Users/wogks/Desktop/flutterPT/douyin_clone/assets/image/gimage.jpeg'),
+                        // backgroundImage: NetworkImage(
+                        //     'https://kormedi.com/wp-content/uploads/2022/04/ck_tica1010005154_l-580x387.jpg'),
                       ),
                       Gaps.h4,
                       Expanded(
