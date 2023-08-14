@@ -1,13 +1,16 @@
 import 'package:douyin_clone/constants/sizes.dart';
+import 'package:douyin_clone/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PostVideoButton extends StatelessWidget {
-  final bool inverted;
   const PostVideoButton({super.key, required this.inverted});
+
+  final bool inverted;
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -36,7 +39,7 @@ class PostVideoButton extends StatelessWidget {
               horizontal: Sizes.size8,
             ),
             decoration: BoxDecoration(
-              color: Colors.red,
+              color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(
                 Sizes.size8,
               ),
@@ -45,16 +48,20 @@ class PostVideoButton extends StatelessWidget {
         ),
         Container(
           height: 30,
-          padding: const EdgeInsets.symmetric(horizontal: Sizes.size12),
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size12,
+          ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Sizes.size8),
-            color: inverted ? Colors.white : Colors.black,
+            color: !inverted || isDark ? Colors.white : Colors.black,
+            borderRadius: BorderRadius.circular(
+              Sizes.size6,
+            ),
           ),
           child: Center(
             child: FaIcon(
               FontAwesomeIcons.plus,
-              size: Sizes.size16,
-              color: inverted ? Colors.black : Colors.white,
+              color: !inverted || isDark ? Colors.black : Colors.white,
+              size: 18,
             ),
           ),
         )

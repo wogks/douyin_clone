@@ -6,6 +6,7 @@ import 'package:douyin_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:douyin_clone/features/main_navigation/widgets/post_video_button.dart';
 import 'package:douyin_clone/features/users/user_profile_screen.dart';
 import 'package:douyin_clone/features/videos/video_timeline_screen.dart';
+import 'package:douyin_clone/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,21 +20,6 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 1;
 
-  final screens = [
-    const Center(
-      child: Text('home'),
-    ),
-    const Center(
-      child: Text('search'),
-    ),
-    const Center(
-      child: Text('profile'),
-    ),
-    const Center(
-      child: Text('user'),
-    ),
-  ];
-
   void _onTap(int index) {
     setState(() {
       _selectedIndex = index;
@@ -41,10 +27,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   void _onPostVideoButtonTap() {
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => Container(),
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: const Text('Record video')),
+        ),
         fullscreenDialog: true,
       ),
     );
@@ -52,6 +39,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: _selectedIndex == 0 ? Colors.black : Colors.white,
@@ -72,19 +60,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           Offstage(
             offstage: _selectedIndex != 4,
             child: const UserProfileScreen(),
-          ),
+          )
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: _selectedIndex == 0 ? Colors.black : Colors.white,
+        color: _selectedIndex == 0 || isDark ? Colors.black : Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(Sizes.size12),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NavTab(
-                text: 'Home',
+                text: "Home",
                 isSelected: _selectedIndex == 0,
                 icon: FontAwesomeIcons.house,
                 selectedIcon: FontAwesomeIcons.house,
@@ -92,7 +79,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 selectedIndex: _selectedIndex,
               ),
               NavTab(
-                text: 'Discover',
+                text: "Discover",
                 isSelected: _selectedIndex == 1,
                 icon: FontAwesomeIcons.compass,
                 selectedIcon: FontAwesomeIcons.solidCompass,
@@ -102,13 +89,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               Gaps.h24,
               GestureDetector(
                 onTap: _onPostVideoButtonTap,
-                child: PostVideoButton(
-                  inverted: _selectedIndex == 0,
-                ),
+                child: PostVideoButton(inverted: _selectedIndex != 0),
               ),
               Gaps.h24,
               NavTab(
-                text: 'Inbox',
+                text: "Inbox",
                 isSelected: _selectedIndex == 3,
                 icon: FontAwesomeIcons.message,
                 selectedIcon: FontAwesomeIcons.solidMessage,
@@ -116,7 +101,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 selectedIndex: _selectedIndex,
               ),
               NavTab(
-                text: 'User',
+                text: "Profile",
                 isSelected: _selectedIndex == 4,
                 icon: FontAwesomeIcons.user,
                 selectedIcon: FontAwesomeIcons.solidUser,
