@@ -1,4 +1,5 @@
 import 'package:douyin_clone/constants/sizes.dart';
+import 'package:douyin_clone/utils.dart';
 import 'package:flutter/material.dart';
 
 class FormButton extends StatelessWidget {
@@ -23,12 +24,20 @@ class FormButton extends StatelessWidget {
         ),
         child: AnimatedDefaultTextStyle(
           style: TextStyle(
-            color: disabled ? Colors.grey.shade400 : Colors.white,
+            color: disabled
+                ? isDarkMode(context)
+                    ? Colors.grey.shade800
+                    : Colors.grey.shade300
+                : Theme.of(context).primaryColor,
             fontWeight: FontWeight.w600,
           ),
           duration: const Duration(milliseconds: 300),
-          child: const Text(
+          child: Text(
             'Next',
+            style: TextStyle(
+              color: disabled ? Colors.grey.shade400 : Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
             textAlign: TextAlign.center,
           ),
         ),
