@@ -22,7 +22,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: const CupertinoSearchTextField(),
+          title: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: Breakpoints.sm),
+              child: const CupertinoSearchTextField()),
           bottom: TabBar(
             splashFactory: NoSplash.splashFactory,
             padding: const EdgeInsets.symmetric(horizontal: Sizes.size16),
