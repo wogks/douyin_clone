@@ -51,30 +51,30 @@ class S {
   }
 
   /// `Sign up for {nameOfTheApp}`
-  String signupTitle(Object nameOfTheApp) {
+  String signUpTitle(String nameOfTheApp) {
     return Intl.message(
       'Sign up for $nameOfTheApp',
-      name: 'signupTitle',
-      desc: '',
+      name: 'signUpTitle',
+      desc: 'The title people see when they open the app for the first time.',
       args: [nameOfTheApp],
     );
   }
 
   /// `Log into your {nameOfTheApp} account`
-  String loginTitle(Object nameOfTheApp) {
+  String loginTitle(String nameOfTheApp) {
     return Intl.message(
       'Log into your $nameOfTheApp account',
       name: 'loginTitle',
-      desc: '',
+      desc: 'The title people see when they open the log in screen',
       args: [nameOfTheApp],
     );
   }
 
   /// `Create a profile, follow other accounts, make your own {videoCount, plural, =0{no videos} =1{video} other{videos}}, and more.`
-  String signupSubtitle(num videoCount) {
+  String signUpSubtitle(num videoCount) {
     return Intl.message(
       'Create a profile, follow other accounts, make your own ${Intl.plural(videoCount, zero: 'no videos', one: 'video', other: 'videos')}, and more.',
-      name: 'signupSubtitle',
+      name: 'signUpSubtitle',
       desc: '',
       args: [videoCount],
     );
@@ -101,22 +101,67 @@ class S {
   }
 
   /// `Already have an account?`
-  String get alreadyHaveAccount {
+  String get alreadyHaveAnAccount {
     return Intl.message(
       'Already have an account?',
-      name: 'alreadyHaveAccount',
+      name: 'alreadyHaveAnAccount',
       desc: '',
       args: [],
     );
   }
 
-  /// `Log in {gender, select, male{sir} female{madam} other{human}}`
-  String login(String gender) {
+  /// `Log in {gender, select, male{sir} female{madam} other{human}}.`
+  String logIn(String gender) {
     return Intl.message(
-      'Log in ${Intl.gender(gender, male: 'sir', female: 'madam', other: 'human')}',
-      name: 'login',
+      'Log in ${Intl.gender(gender, male: 'sir', female: 'madam', other: 'human')}.',
+      name: 'logIn',
       desc: '',
       args: [gender],
+    );
+  }
+
+  /// `{potato}`
+  String likeCount(int potato) {
+    final NumberFormat potatoNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String potatoString = potatoNumberFormat.format(potato);
+
+    return Intl.message(
+      '$potatoString',
+      name: 'likeCount',
+      desc: 'Anything you want',
+      args: [potatoString],
+    );
+  }
+
+  /// `{potato}`
+  String commentCount(int potato) {
+    final NumberFormat potatoNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String potatoString = potatoNumberFormat.format(potato);
+
+    return Intl.message(
+      '$potatoString',
+      name: 'commentCount',
+      desc: 'Anything you want',
+      args: [potatoString],
+    );
+  }
+
+  /// `{value} {value2, plural, =1{comment} other{comments}}`
+  String commentTitle(int value, num value2) {
+    final NumberFormat valueNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String valueString = valueNumberFormat.format(value);
+
+    return Intl.message(
+      '$valueString ${Intl.plural(value2, one: 'comment', other: 'comments')}',
+      name: 'commentTitle',
+      desc: 'Anything you want',
+      args: [valueString, value2],
     );
   }
 }

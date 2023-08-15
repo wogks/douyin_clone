@@ -2,6 +2,7 @@ import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
 import 'package:douyin_clone/features/videos/widgets/video_button.dart';
 import 'package:douyin_clone/features/videos/widgets/video_comments.dart';
+import 'package:douyin_clone/generated/l10n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -164,7 +165,7 @@ class _VideoPostState extends State<VideoPost>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "@니꼬",
+                  "@재한",
                   style: TextStyle(
                     fontSize: Sizes.size20,
                     color: Colors.white,
@@ -191,22 +192,22 @@ class _VideoPostState extends State<VideoPost>
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
-                  foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/3612017",
+                  foregroundImage: AssetImage(
+                    "assets/image/gimage.jpeg",
                   ),
-                  child: Text("니꼬"),
+                  child: Text("재한"),
                 ),
                 Gaps.v24,
-                const VideoButton(
+                VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
-                  text: "2.9M",
+                  text: S.of(context).likeCount(123123123),
                 ),
                 Gaps.v24,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
-                  child: const VideoButton(
+                  child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: "33K",
+                    text: S.of(context).commentCount(12312412),
                   ),
                 ),
                 Gaps.v24,
