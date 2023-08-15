@@ -7,13 +7,14 @@ import 'package:douyin_clone/generated/l10n.dart';
 import 'package:douyin_clone/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatelessWidget {
   static String routeName = '/';
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
-    await Navigator.of(context).pushNamed(LoginScreen.routeName);
+    context.push(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
@@ -28,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
     //     },
     //   ),
     // );
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.push(UsernameScreen.routeName);
   }
 
   @override
