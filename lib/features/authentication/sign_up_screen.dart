@@ -10,7 +10,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static const routeName = "/";
+  static const routeName = "signup";
+  static const routeURL = "/";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
@@ -34,7 +35,7 @@ class SignUpScreen extends StatelessWidget {
         },
       ),
     ); */
-    context.push(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override
