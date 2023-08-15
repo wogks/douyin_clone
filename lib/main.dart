@@ -1,5 +1,5 @@
 import 'package:douyin_clone/constants/sizes.dart';
-import 'package:douyin_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:douyin_clone/features/authentication/sign_up_screen.dart';
 import 'package:douyin_clone/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,7 +84,7 @@ class TikTokApp extends StatelessWidget {
         ),
         primaryColor: const Color(0xFFE9435A),
       ),
-      home: const MainNavigationScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
