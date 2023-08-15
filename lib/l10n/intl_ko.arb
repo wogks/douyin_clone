@@ -1,6 +1,6 @@
 {
-  "signupTitle": "Sign up for {nameOfTheApp}",
-  "loginTitle": "Log into your {nameOfTheApp} account",
+  "signupTitle": "{nameOfTheApp}에 가입하세요",
+  "loginTitle": "{nameOfTheApp}에 로그인하세요",
   "signupSubtitle": "Create a profile, follow other accounts, make your own videos, and more.",
   "emailPasswordButton": "Use email & password",
   "appleButton": "Continue with Apple",
