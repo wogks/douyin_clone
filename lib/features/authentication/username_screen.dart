@@ -5,6 +5,7 @@ import 'package:douyin_clone/features/authentication/widgets/form_button.dart';
 import 'package:flutter/material.dart';
 
 class UsernameScreen extends StatefulWidget {
+  static String routeName = 'usename';
   const UsernameScreen({super.key});
 
   @override

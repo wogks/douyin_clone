@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginScreen extends StatelessWidget {
+  static String routeName = '/login';
   const LoginScreen({super.key});
 
   void _onSignUpTap(BuildContext context) {

@@ -9,28 +9,26 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpScreen extends StatelessWidget {
+  static String routeName = '/';
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+  void _onLoginTap(BuildContext context) async {
+    await Navigator.of(context).pushNamed(LoginScreen.routeName);
   }
 
   void _onEmailTap(BuildContext context) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        transitionDuration: const Duration(seconds: 1),
-        reverseTransitionDuration: const Duration(seconds: 1),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-            FadeTransition(opacity: animation, child: child),
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return const UsernameScreen();
-        },
-      ),
-    );
+    // Navigator.of(context).push(
+    //   PageRouteBuilder(
+    //     transitionDuration: const Duration(seconds: 1),
+    //     reverseTransitionDuration: const Duration(seconds: 1),
+    //     transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+    //         FadeTransition(opacity: animation, child: child),
+    //     pageBuilder: (context, animation, secondaryAnimation) {
+    //       return const UsernameScreen();
+    //     },
+    //   ),
+    // );
+    Navigator.of(context).pushNamed(UsernameScreen.routeName);
   }
 
   @override
