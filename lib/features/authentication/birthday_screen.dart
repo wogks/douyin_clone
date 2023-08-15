@@ -20,9 +20,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   @override
   void initState() {
     super.initState();
-    DateTime now = DateTime.now();
-    initialDate = DateTime(now.year - 12);
-    _setTextfiledDate(initialDate);
+    _setTextFieldDate(initialDate);
   }
 
   @override
@@ -32,42 +30,37 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    Navigator.pushAndRemoveUntil(
-      context,
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const InterestsScreen(),
       ),
-      (route) {
-        return false;
-      },
+      (route) => false,
     );
   }
 
-  void _setTextfiledDate(DateTime date) {
-    final textdate = date.toString().split(" ").first;
-    _birthdayController.value = TextEditingValue(text: textdate);
+  void _setTextFieldDate(DateTime date) {
+    final textDate = date.toString().split(" ").first;
+    _birthdayController.value = TextEditingValue(text: textDate);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        foregroundColor: Colors.black,
         title: const Text(
           "Sign up",
         ),
-        backgroundColor: Colors.white,
-        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 36),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Sizes.size36,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Gaps.v40,
             const Text(
-              'When is your birthday?',
+              "When's your birthday?",
               style: TextStyle(
                 fontSize: Sizes.size24,
                 fontWeight: FontWeight.w700,
@@ -75,7 +68,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             ),
             Gaps.v8,
             const Text(
-              "Your birthday won't be shown publicly",
+              "Your birthday won't be shown publicly.",
               style: TextStyle(
                 fontSize: Sizes.size16,
                 color: Colors.black54,
@@ -85,7 +78,6 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             TextField(
               enabled: false,
               controller: _birthdayController,
-              cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -98,8 +90,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                   ),
                 ),
               ),
+              cursorColor: Theme.of(context).primaryColor,
             ),
-            Gaps.v16,
+            Gaps.v28,
             GestureDetector(
               onTap: _onNextTap,
               child: const FormButton(disabled: false),
@@ -107,15 +100,13 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: SizedBox(
-          height: 300,
-          child: CupertinoDatePicker(
-            maximumDate: initialDate,
-            initialDateTime: initialDate,
-            mode: CupertinoDatePickerMode.date,
-            onDateTimeChanged: _setTextfiledDate,
-          ),
+      bottomNavigationBar: SizedBox(
+        height: 300,
+        child: CupertinoDatePicker(
+          maximumDate: initialDate,
+          initialDateTime: initialDate,
+          mode: CupertinoDatePickerMode.date,
+          onDateTimeChanged: _setTextFieldDate,
         ),
       ),
     );

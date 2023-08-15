@@ -4,17 +4,20 @@ import 'package:douyin_clone/features/authentication/password_screen.dart';
 import 'package:douyin_clone/features/authentication/widgets/form_button.dart';
 import 'package:flutter/material.dart';
 
-class EmailScreenParams {
+class EmailScreenArgs {
   final String username;
 
-  EmailScreenParams({required this.username});
+  EmailScreenArgs({required this.username});
 }
 
 class EmailScreen extends StatefulWidget {
-  static String routeName = '/email';
+  static String routeName = "/email";
+
+  final String username;
 
   const EmailScreen({
     super.key,
+    required this.username,
   });
 
   @override
@@ -24,7 +27,7 @@ class EmailScreen extends StatefulWidget {
 class _EmailScreenState extends State<EmailScreen> {
   final TextEditingController _emailController = TextEditingController();
 
-  String _email = '';
+  String _email = "";
 
   @override
   void initState() {
@@ -47,9 +50,13 @@ class _EmailScreenState extends State<EmailScreen> {
     final regExp = RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     if (!regExp.hasMatch(_email)) {
-      return 'Email not valid';
+      return "Email not valid";
     }
     return null;
+  }
+
+  void _onScaffoldTap() {
+    FocusScope.of(context).unfocus();
   }
 
   void _onSubmit() {
@@ -62,34 +69,26 @@ class _EmailScreenState extends State<EmailScreen> {
     );
   }
 
-  void _onScaffoldTap() {
-    FocusScope.of(context).unfocus();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as EmailScreenParams;
     return GestureDetector(
       onTap: _onScaffoldTap,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          foregroundColor: Colors.black,
           title: const Text(
             "Sign up",
           ),
-          backgroundColor: Colors.white,
-          elevation: 0,
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 36),
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size36,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gaps.v40,
               Text(
-                'What is your email? ${args.username}',
+                "What is your email, ${widget.username}?",
                 style: const TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
@@ -97,14 +96,13 @@ class _EmailScreenState extends State<EmailScreen> {
               ),
               Gaps.v16,
               TextField(
-                onEditingComplete: _onSubmit,
-                keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
                 controller: _emailController,
-                cursorColor: Theme.of(context).primaryColor,
+                keyboardType: TextInputType.emailAddress,
+                onEditingComplete: _onSubmit,
+                autocorrect: false,
                 decoration: InputDecoration(
+                  hintText: "Email",
                   errorText: _isEmailValid(),
-                  hintText: 'Email',
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -116,12 +114,14 @@ class _EmailScreenState extends State<EmailScreen> {
                     ),
                   ),
                 ),
+                cursorColor: Theme.of(context).primaryColor,
               ),
-              Gaps.v16,
+              Gaps.v28,
               GestureDetector(
                 onTap: _onSubmit,
                 child: FormButton(
-                    disabled: _email.isEmpty || _isEmailValid() != null),
+                  disabled: _email.isEmpty || _isEmailValid() != null,
+                ),
               ),
             ],
           ),

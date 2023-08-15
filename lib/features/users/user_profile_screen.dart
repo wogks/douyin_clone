@@ -7,7 +7,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String username;
-  const UserProfileScreen({super.key, required this.username});
+  final String tab;
+
+  const UserProfileScreen({
+    super.key,
+    required this.username,
+    required this.tab,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -15,8 +21,7 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   void _onGearPressed() {
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const SettingsScreen(),
       ),
@@ -29,6 +34,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       body: SafeArea(
         child: DefaultTabController(
+          initialIndex: widget.tab == "likes" ? 1 : 0,
           length: 2,
           child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -42,7 +48,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         FontAwesomeIcons.gear,
                         size: Sizes.size20,
                       ),
-                    ),
+                    )
                   ],
                 ),
                 SliverToBoxAdapter(
@@ -51,18 +57,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       Gaps.v20,
                       const CircleAvatar(
                         radius: 50,
-                        foregroundColor: Colors.amber,
                         foregroundImage: NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8oUyCgsOgK9ieUxCG8l9iHk_Tu3ti5GZ7A&usqp=CAU'),
-                        child: Text('재한'),
+                            "https://avatars.githubusercontent.com/u/3612017"),
+                        child: Text("니꼬"),
                       ),
                       Gaps.v20,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            '@하니',
-                            style: TextStyle(
+                          Text(
+                            "@${widget.username}",
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: Sizes.size18,
                             ),
@@ -70,8 +75,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           Gaps.h5,
                           FaIcon(
                             FontAwesomeIcons.solidCircleCheck,
+                            size: Sizes.size16,
                             color: Colors.blue.shade500,
-                          ),
+                          )
                         ],
                       ),
                       Gaps.v24,
@@ -83,22 +89,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             Column(
                               children: [
                                 const Text(
-                                  '1',
+                                  "97",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: Sizes.size18,
                                   ),
                                 ),
-                                Gaps.v3,
-                                Text(
-                                  'Following',
-                                  style: TextStyle(color: Colors.grey.shade500),
-                                )
+                                Gaps.v1,
+                                Text("Following",
+                                    style: TextStyle(
+                                      color: Colors.grey.shade500,
+                                    ))
                               ],
                             ),
                             VerticalDivider(
-                              width: 30,
-                              thickness: 1,
+                              width: Sizes.size32,
+                              thickness: Sizes.size1,
                               color: Colors.grey.shade400,
                               indent: Sizes.size14,
                               endIndent: Sizes.size14,
@@ -106,22 +112,24 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             Column(
                               children: [
                                 const Text(
-                                  '429M',
+                                  "10M",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: Sizes.size18,
                                   ),
                                 ),
-                                Gaps.v3,
+                                Gaps.v1,
                                 Text(
-                                  'Followers',
-                                  style: TextStyle(color: Colors.grey.shade500),
+                                  "Followers",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                  ),
                                 )
                               ],
                             ),
                             VerticalDivider(
-                              width: 30,
-                              thickness: 1,
+                              width: Sizes.size32,
+                              thickness: Sizes.size1,
                               color: Colors.grey.shade400,
                               indent: Sizes.size14,
                               endIndent: Sizes.size14,
@@ -129,19 +137,21 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             Column(
                               children: [
                                 const Text(
-                                  '744M',
+                                  "194.3M",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: Sizes.size18,
                                   ),
                                 ),
-                                Gaps.v3,
+                                Gaps.v1,
                                 Text(
-                                  'likes',
-                                  style: TextStyle(color: Colors.grey.shade500),
-                                ),
+                                  "Likes",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                  ),
+                                )
                               ],
-                            ),
+                            )
                           ],
                         ),
                       ),
@@ -174,7 +184,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           horizontal: Sizes.size32,
                         ),
                         child: Text(
-                          '안녕하십니까 플러터개발자 정재한입니다.',
+                          "All highlights and where to watch live matches on FIFA+ I wonder how it would loook",
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -188,11 +198,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                           Gaps.h4,
                           Text(
-                            'www.naver.com',
+                            "https://nomadcoders.co",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                             ),
-                          )
+                          ),
                         ],
                       ),
                       Gaps.v20,
@@ -208,9 +218,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             body: TabBarView(
               children: [
                 GridView.builder(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
-                  padding: const EdgeInsets.all(0),
+                  itemCount: 20,
+                  padding: EdgeInsets.zero,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: Sizes.size2,
@@ -223,17 +232,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         aspectRatio: 9 / 14,
                         child: FadeInImage.assetNetwork(
                           fit: BoxFit.cover,
-                          placeholder:
-                              '/Users/wogks/Desktop/flutterPT/douyin_clone/assets/image/ee.jpg',
+                          placeholder: "assets/images/placeholder.jpg",
                           image:
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8dkWGo6GZS-vbF55vuOQV4SpwAbjFDKz3ig&usqp=CAU',
+                              "https://images.unsplash.com/photo-1673844969019-c99b0c933e90?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80",
                         ),
                       ),
                     ],
                   ),
                 ),
                 const Center(
-                  child: Text('2'),
+                  child: Text('Page two'),
                 ),
               ],
             ),

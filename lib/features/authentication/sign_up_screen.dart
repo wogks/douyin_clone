@@ -10,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatelessWidget {
-  static String routeName = '/';
+  static const routeName = "/";
   const SignUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
@@ -18,17 +18,22 @@ class SignUpScreen extends StatelessWidget {
   }
 
   void _onEmailTap(BuildContext context) {
-    // Navigator.of(context).push(
-    //   PageRouteBuilder(
-    //     transitionDuration: const Duration(seconds: 1),
-    //     reverseTransitionDuration: const Duration(seconds: 1),
-    //     transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-    //         FadeTransition(opacity: animation, child: child),
-    //     pageBuilder: (context, animation, secondaryAnimation) {
-    //       return const UsernameScreen();
-    //     },
-    //   ),
-    // );
+    /* Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const UsernameScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final offsetAnimation = Tween(
+            begin: const Offset(-1, -1),
+            end: Offset.zero,
+          ).animate(animation);
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      ),
+    ); */
     context.push(UsernameScreen.routeName);
   }
 
@@ -54,7 +59,7 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v80,
                   Text(
-                    S.of(context).signUpTitle('Tiktok'),
+                    S.of(context).signUpTitle("TikTok"),
                     style: const TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,
@@ -64,7 +69,7 @@ class SignUpScreen extends StatelessWidget {
                   Opacity(
                     opacity: 0.7,
                     child: Text(
-                      S.of(context).signUpSubtitle(10),
+                      S.of(context).signUpSubtitle(19687),
                       style: const TextStyle(
                         fontSize: Sizes.size16,
                       ),
@@ -111,12 +116,14 @@ class SignUpScreen extends StatelessWidget {
               ),
             ),
           ),
-          bottomNavigationBar: BottomAppBar(
-            color: isDarkMode(context) ? null : Colors.grey.shade50,
-            elevation: 2,
+          bottomNavigationBar: Container(
+            color: isDarkMode(context)
+                ? Theme.of(context).appBarTheme.backgroundColor
+                : Colors.grey.shade50,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: Sizes.size32,
+              padding: const EdgeInsets.only(
+                top: Sizes.size32,
+                bottom: Sizes.size64,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +138,7 @@ class SignUpScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () => _onLoginTap(context),
                     child: Text(
-                      S.of(context).logIn('male'),
+                      S.of(context).logIn("female"),
                       style: TextStyle(
                         fontSize: Sizes.size16,
                         fontWeight: FontWeight.w600,

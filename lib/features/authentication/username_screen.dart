@@ -3,9 +3,10 @@ import 'package:douyin_clone/constants/sizes.dart';
 import 'package:douyin_clone/features/authentication/email_screen.dart';
 import 'package:douyin_clone/features/authentication/widgets/form_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UsernameScreen extends StatefulWidget {
-  static String routeName = '/username';
+  static String routeName = "/username";
   const UsernameScreen({super.key});
 
   @override
@@ -15,14 +16,14 @@ class UsernameScreen extends StatefulWidget {
 class _UsernameScreenState extends State<UsernameScreen> {
   final TextEditingController _usernameController = TextEditingController();
 
-  String _userName = '';
+  String _username = "";
 
   @override
   void initState() {
     super.initState();
     _usernameController.addListener(() {
       setState(() {
-        _userName = _usernameController.text;
+        _username = _usernameController.text;
       });
     });
   }
@@ -34,31 +35,31 @@ class _UsernameScreenState extends State<UsernameScreen> {
   }
 
   void _onNextTap() {
-    if (_userName.isEmpty) return;
-    Navigator.pushNamed(context, EmailScreen.routeName,
-        arguments: EmailScreenParams(username: _userName));
+    if (_username.isEmpty) return;
+    context.push(
+      EmailScreen.routeName,
+      extra: EmailScreenArgs(username: _username),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        foregroundColor: Colors.black,
         title: const Text(
           "Sign up",
         ),
-        backgroundColor: Colors.white,
-        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 36),
+        padding: const EdgeInsets.symmetric(
+          horizontal: Sizes.size36,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Gaps.v40,
             const Text(
-              'Create username',
+              "Create username",
               style: TextStyle(
                 fontSize: Sizes.size24,
                 fontWeight: FontWeight.w700,
@@ -66,7 +67,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
             ),
             Gaps.v8,
             const Text(
-              'You can always change this later.',
+              "You can always change this later.",
               style: TextStyle(
                 fontSize: Sizes.size16,
                 color: Colors.black54,
@@ -75,9 +76,8 @@ class _UsernameScreenState extends State<UsernameScreen> {
             Gaps.v16,
             TextField(
               controller: _usernameController,
-              cursorColor: Theme.of(context).primaryColor,
               decoration: InputDecoration(
-                hintText: 'Username',
+                hintText: "Username",
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey.shade400,
@@ -89,11 +89,13 @@ class _UsernameScreenState extends State<UsernameScreen> {
                   ),
                 ),
               ),
+              cursorColor: Theme.of(context).primaryColor,
             ),
-            Gaps.v16,
+            Gaps.v28,
             GestureDetector(
-                onTap: _onNextTap,
-                child: FormButton(disabled: _userName.isEmpty))
+              onTap: _onNextTap,
+              child: FormButton(disabled: _username.isEmpty),
+            ),
           ],
         ),
       ),
