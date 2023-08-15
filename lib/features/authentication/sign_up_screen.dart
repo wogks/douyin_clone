@@ -6,7 +6,6 @@ import 'package:douyin_clone/features/authentication/widgets/auth_button.dart';
 import 'package:douyin_clone/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_gen/gen_l10n/intl_generated.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -48,9 +47,9 @@ class SignUpScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Gaps.v80,
-                  Text(
-                    AppLocalizations.of(context)!.signUpTitle('Tiktok'),
-                    style: const TextStyle(
+                  const Text(
+                    'Sign up to Tiktok',
+                    style: TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,
                     ),
