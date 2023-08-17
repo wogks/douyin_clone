@@ -9,6 +9,7 @@ import 'package:video_player/video_player.dart';
 class VideoPreviewScreen extends StatefulWidget {
   final XFile video;
   final bool isPicked;
+
   const VideoPreviewScreen({
     super.key,
     required this.video,
@@ -21,17 +22,18 @@ class VideoPreviewScreen extends StatefulWidget {
 
 class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   late final VideoPlayerController _videoPlayerController;
+
   bool _savedVideo = false;
 
   Future<void> _initVideo() async {
     _videoPlayerController = VideoPlayerController.file(
-      File(
-        widget.video.path,
-      ),
+      File(widget.video.path),
     );
+
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     await _videoPlayerController.play();
+
     setState(() {});
   }
 
@@ -41,12 +43,20 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     _initVideo();
   }
 
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    super.dispose();
+  }
+
   Future<void> _saveToGallery() async {
     if (_savedVideo) return;
+
     await GallerySaver.saveVideo(
       widget.video.path,
-      albumName: '틱톡클론',
+      albumName: "TikTok Clone!",
     );
+
     _savedVideo = true;
 
     setState(() {});
@@ -57,7 +67,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('preview video'),
+        title: const Text('Preview video'),
         actions: [
           if (!widget.isPicked)
             IconButton(
@@ -67,7 +77,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
                     ? FontAwesomeIcons.check
                     : FontAwesomeIcons.download,
               ),
-            ),
+            )
         ],
       ),
       body: _videoPlayerController.value.isInitialized
