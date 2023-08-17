@@ -1,9 +1,9 @@
 import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
-import 'package:douyin_clone/common/widgets/main_navigation/main_navigation_screen.dart';
 import 'package:douyin_clone/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 enum Direction { right, left }
 
@@ -51,12 +51,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
     //   ),
     //   (route) => false,
     // );
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const MainNavigationScreen(),
-      ),
-    );
+    context.go("/home");
   }
 
   @override
