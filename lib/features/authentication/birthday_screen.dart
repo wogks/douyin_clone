@@ -4,6 +4,7 @@ import 'package:douyin_clone/features/authentication/widgets/form_button.dart';
 import 'package:douyin_clone/features/onboarding/interests_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class BirthdayScreen extends StatefulWidget {
   const BirthdayScreen({super.key});
@@ -36,12 +37,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
     //   ),
     //   (route) => false,
     // );
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const InterestsScreen(),
-      ),
-    );
+    context.pushReplacementNamed(InterestsScreen.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {

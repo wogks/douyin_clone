@@ -5,6 +5,8 @@ import 'package:douyin_clone/features/onboarding/widgets/interest_button.dart';
 import 'package:flutter/material.dart';
 
 class InterestsScreen extends StatefulWidget {
+  static const String routeName = 'interests';
+  static const String routeURL = '/tutorial';
   const InterestsScreen({super.key});
 
   @override
