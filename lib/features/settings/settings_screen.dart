@@ -1,25 +1,13 @@
+import 'package:douyin_clone/features/videos/view_models/video_config_vm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
-
-  void _onNotificationsChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Settings'),
@@ -27,36 +15,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         body: ListView(
           children: [
             SwitchListTile.adaptive(
-              value: false,
-              onChanged: (value) {},
+              value: ref.watch(playbackConfigProvider).muted,
+              onChanged: (value) {
+                ref.read(playbackConfigProvider.notifier).setMuted(value);
+              },
               title: const Text('음소거'),
             ),
             SwitchListTile.adaptive(
-              value: false,
-              onChanged: (value) {},
+              value: ref.watch(playbackConfigProvider).autoplay,
+              onChanged: (value) {
+                ref.read(playbackConfigProvider.notifier).setAutoplay(value);
+              },
               title: const Text('자동재생'),
-            ),
-            Switch.adaptive(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
-            ),
-            CupertinoSwitch(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
-            ),
-            Switch(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
-            ),
-            Checkbox(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
-            ),
-            CheckboxListTile(
-              activeColor: Colors.black,
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
-              title: const Text('Enable notifications'),
             ),
             const AboutListTile(
               applicationVersion: '1.1',
