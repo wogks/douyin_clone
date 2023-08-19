@@ -1,3 +1,4 @@
+import 'package:douyin_clone/common/widgets/video_config/video_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         body: ListView(
           children: [
+            AnimatedBuilder(
+              animation: videoConfig,
+              builder: (context, child) => SwitchListTile.adaptive(
+                value: videoConfig.autoMute,
+                onChanged: (value) {
+                  videoConfig.toggleAutoMute();
+                },
+                title: const Text('Mute video'),
+                subtitle: const Text('video will be buted'),
+              ),
+            ),
             Switch.adaptive(
               value: _notifications,
               onChanged: _onNotificationsChanged,
