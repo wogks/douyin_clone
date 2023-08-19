@@ -40,7 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onChanged: (value) {
                 context.read<PlaybackConfigViewModel>().setAutoplay(value);
               },
-              title: const Text('음소거'),
+              title: const Text('자동재생'),
             ),
             Switch.adaptive(
               value: _notifications,
