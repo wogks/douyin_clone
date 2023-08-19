@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
-import 'package:douyin_clone/features/videos/video_preview_screen.dart';
+import 'package:douyin_clone/features/videos/views/video_preview_screen.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
