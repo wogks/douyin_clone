@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class VideoPlayConfigRepository {
+class VideoPlaybackConfigRepository {
   final SharedPreferences _preferences;
-  VideoPlayConfigRepository(this._preferences);
+  VideoPlaybackConfigRepository(this._preferences);
 
   static const String _autoplay = 'autoplay';
   static const String _muted = 'muted';

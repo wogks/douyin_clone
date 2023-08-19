@@ -1,11 +1,13 @@
-import 'package:douyin_clone/common/widgets/video_config/video_config.dart';
 import 'package:douyin_clone/constants/sizes.dart';
+import 'package:douyin_clone/features/videos/repos/video_config_repo.dart';
+import 'package:douyin_clone/features/videos/view_models/video_config_vm.dart';
 import 'package:douyin_clone/generated/l10n.dart';
 import 'package:douyin_clone/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +18,17 @@ void main() async {
     ],
   );
 
-  runApp(const TikTokApp());
+  final preferences = await SharedPreferences.getInstance();
+  final repository = VideoPlaybackConfigRepository(preferences);
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => PlaybackConfigViewModel(repository),
+      )
+    ],
+    child: const TikTokApp(),
+  ));
 }
 
 class TikTokApp extends StatelessWidget {
@@ -25,72 +37,67 @@ class TikTokApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     S.load(const Locale('en'));
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => VideoConfig()),
+    return MaterialApp.router(
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
+      title: 'TikTok Clone',
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate
       ],
-      child: MaterialApp.router(
-        routerConfig: router,
-        debugShowCheckedModeBanner: false,
-        title: 'TikTok Clone',
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate
-        ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('ko'),
-        ],
-        themeMode: ThemeMode.system,
-        theme: ThemeData(
-            textTheme: Typography.blackMountainView,
-            brightness: Brightness.light,
-            scaffoldBackgroundColor: Colors.white,
-            primaryColor: const Color(0xFFE9435A),
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: Color(0xFFE9435A),
-            ),
-            splashColor: Colors.transparent,
-            appBarTheme: const AppBarTheme(
-              foregroundColor: Colors.black,
-              backgroundColor: Colors.white,
-              elevation: 0,
-              titleTextStyle: TextStyle(
-                color: Colors.black,
-                fontSize: Sizes.size16 + Sizes.size2,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            tabBarTheme: TabBarTheme(
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey.shade500,
-              indicatorColor: Colors.black,
-            ),
-            listTileTheme: const ListTileThemeData(
-              iconColor: Colors.black,
-            )),
-        darkTheme: ThemeData(
-          tabBarTheme: TabBarTheme(
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.grey.shade500,
-            indicatorColor: Colors.white,
-          ),
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ko'),
+      ],
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+          textTheme: Typography.blackMountainView,
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.white,
+          primaryColor: const Color(0xFFE9435A),
           textSelectionTheme: const TextSelectionThemeData(
             cursorColor: Color(0xFFE9435A),
           ),
-          textTheme: Typography.whiteMountainView,
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: Colors.black,
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.grey.shade900,
+          splashColor: Colors.transparent,
+          appBarTheme: const AppBarTheme(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontSize: Sizes.size16 + Sizes.size2,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          bottomAppBarTheme: BottomAppBarTheme(
-            color: Colors.grey.shade900,
+          tabBarTheme: TabBarTheme(
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey.shade500,
+            indicatorColor: Colors.black,
           ),
-          primaryColor: const Color(0xFFE9435A),
+          listTileTheme: const ListTileThemeData(
+            iconColor: Colors.black,
+          )),
+      darkTheme: ThemeData(
+        tabBarTheme: TabBarTheme(
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.grey.shade500,
+          indicatorColor: Colors.white,
         ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFFE9435A),
+        ),
+        textTheme: Typography.whiteMountainView,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey.shade900,
+        ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.grey.shade900,
+        ),
+        primaryColor: const Color(0xFFE9435A),
       ),
     );
   }
