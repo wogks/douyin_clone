@@ -9,7 +9,7 @@ import 'package:douyin_clone/features/videos/video_recording_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-  initialLocation: '/inbox',
+  initialLocation: "/inbox",
   routes: [
     GoRoute(
       name: SignUpScreen.routeName,
@@ -17,46 +17,49 @@ final router = GoRouter(
       builder: (context, state) => const SignUpScreen(),
     ),
     GoRoute(
-      path: LoginScreen.routeURL,
       name: LoginScreen.routeName,
+      path: LoginScreen.routeURL,
       builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
-      path: InterestsScreen.routeURL,
       name: InterestsScreen.routeName,
+      path: InterestsScreen.routeURL,
       builder: (context, state) => const InterestsScreen(),
     ),
     GoRoute(
-      path: '/:tab(home|discover|inbox|profile)',
+      path: "/:tab(home|discover|inbox|profile)",
       name: MainNavigationScreen.routeName,
       builder: (context, state) {
-        final tab = state.params['tab']!;
+        final tab = state.params["tab"]!;
         return MainNavigationScreen(tab: tab);
       },
     ),
     GoRoute(
-      path: ActivityScreen.routeURL,
       name: ActivityScreen.routeName,
+      path: ActivityScreen.routeURL,
       builder: (context, state) => const ActivityScreen(),
     ),
     GoRoute(
-        path: ChatsScreen.routeURL,
-        name: ChatsScreen.routeName,
-        builder: (context, state) => const ChatsScreen(),
-        routes: [
-          GoRoute(
-            path: ChatDetailScreen.routeURL,
-            name: ChatDetailScreen.routeName,
-            builder: (context, state) {
-              final chatId = state.params['chatId']!;
-              return ChatDetailScreen(chatId: chatId);
-            },
-          ),
-        ]),
+      name: ChatsScreen.routeName,
+      path: ChatsScreen.routeURL,
+      builder: (context, state) => const ChatsScreen(),
+      routes: [
+        GoRoute(
+          name: ChatDetailScreen.routeName,
+          path: ChatDetailScreen.routeURL,
+          builder: (context, state) {
+            final chatId = state.params["chatId"]!;
+            return ChatDetailScreen(
+              chatId: chatId,
+            );
+          },
+        )
+      ],
+    ),
     GoRoute(
-      path: VideoRecordingScreen.routeUrl,
+      path: VideoRecordingScreen.routeURL,
       name: VideoRecordingScreen.routeName,
-      builder: 
+      builder: (context, state) => const VideoRecordingScreen(),
     )
   ],
 );
