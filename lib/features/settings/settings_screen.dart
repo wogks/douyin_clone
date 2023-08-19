@@ -1,7 +1,5 @@
-import 'package:douyin_clone/features/videos/view_models/video_config_vm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -29,17 +27,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         body: ListView(
           children: [
             SwitchListTile.adaptive(
-              value: context.watch<PlaybackConfigViewModel>().muted,
-              onChanged: (value) {
-                context.read<PlaybackConfigViewModel>().setMuted(value);
-              },
+              value: false,
+              onChanged: (value) {},
               title: const Text('음소거'),
             ),
             SwitchListTile.adaptive(
-              value: context.watch<PlaybackConfigViewModel>().autoplay,
-              onChanged: (value) {
-                context.read<PlaybackConfigViewModel>().setAutoplay(value);
-              },
+              value: false,
+              onChanged: (value) {},
               title: const Text('자동재생'),
             ),
             Switch.adaptive(
