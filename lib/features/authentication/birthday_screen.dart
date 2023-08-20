@@ -1,19 +1,19 @@
 import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
+import 'package:douyin_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:douyin_clone/features/authentication/widgets/form_button.dart';
-import 'package:douyin_clone/features/onboarding/interests_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BirthdayScreen extends StatefulWidget {
+class BirthdayScreen extends ConsumerStatefulWidget {
   const BirthdayScreen({super.key});
 
   @override
-  State<BirthdayScreen> createState() => _BirthdayScreenState();
+  ConsumerState<BirthdayScreen> createState() => _BirthdayScreenState();
 }
 
-class _BirthdayScreenState extends State<BirthdayScreen> {
+class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
 
   DateTime initialDate = DateTime.now();
@@ -30,14 +30,10 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
     super.dispose();
   }
 
-  void _onNextTap() {
-    // Navigator.of(context).pushAndRemoveUntil(
-    //   MaterialPageRoute(
-    //     builder: (context) => const InterestsScreen(),
-    //   ),
-    //   (route) => false,
-    // );
-    context.goNamed(InterestsScreen.routeName);
+  void _onNextTap() async {
+    print(ref.read(signUpForm.notifier).state);
+    await ref.read(signUpProvider.notifier).signUp();
+    // context.goNamed(InterestsScreen.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {
@@ -97,7 +93,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             Gaps.v28,
             GestureDetector(
               onTap: _onNextTap,
-              child: const FormButton(disabled: false),
+              child: FormButton(
+                disabled: ref.watch(signUpProvider).isLoading,
+              ),
             ),
           ],
         ),
