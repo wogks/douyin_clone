@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 
 final routerProvider = Provider(
   (ref) {
+    ref.watch(authState);
     return GoRouter(
       redirect: (context, state) {
         final isLoggedIn = ref.read(authRepo).isLoggedIn;
@@ -24,7 +25,7 @@ final routerProvider = Provider(
         }
         return null;
       },
-      initialLocation: "/inbox",
+      initialLocation: "/home",
       routes: [
         GoRoute(
           name: SignUpScreen.routeName,
