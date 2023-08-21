@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:douyin_clone/features/authentication/repos/authentication_repo.dart';
