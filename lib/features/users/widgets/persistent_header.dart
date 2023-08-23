@@ -3,7 +3,7 @@ import 'package:douyin_clone/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class PersistentTabbar extends SliverPersistentHeaderDelegate {
+class PersistentTabBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -19,16 +19,22 @@ class PersistentTabbar extends SliverPersistentHeaderDelegate {
         ),
       ),
       child: TabBar(
-        labelPadding: const EdgeInsets.symmetric(vertical: Sizes.size10),
         indicatorSize: TabBarIndicatorSize.label,
         indicatorColor: Theme.of(context).tabBarTheme.indicatorColor,
+        labelPadding: const EdgeInsets.symmetric(
+          vertical: Sizes.size10,
+        ),
         tabs: const [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: Sizes.size20),
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes.size20,
+            ),
             child: Icon(Icons.grid_4x4_rounded),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: Sizes.size20),
+            padding: EdgeInsets.symmetric(
+              horizontal: Sizes.size20,
+            ),
             child: FaIcon(FontAwesomeIcons.heart),
           ),
         ],
@@ -44,7 +50,6 @@ class PersistentTabbar extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    // TODO: implement shouldRebuild
-    return false;
+    return true;
   }
 }

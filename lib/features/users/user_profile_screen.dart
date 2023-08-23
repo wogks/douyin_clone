@@ -34,9 +34,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return ref.watch(usersProvider).when(
-          error: (error, stackTrace) => Center(child: Text(error.toString())),
-          loading: () =>
-              const Center(child: CircularProgressIndicator.adaptive()),
+          error: (error, stackTrace) => Center(
+            child: Text(error.toString()),
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator.adaptive(),
+          ),
           data: (data) => Scaffold(
             backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             body: SafeArea(
@@ -62,7 +65,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         child: Column(
                           children: [
                             Gaps.v20,
-                            Avatar(name: data.name),
+                            Avatar(
+                              uid: data.uid,
+                              name: data.name,
+                              hasAvatar: data.hasAvatar,
+                            ),
                             Gaps.v20,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -212,7 +219,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                         ),
                       ),
                       SliverPersistentHeader(
-                        delegate: PersistentTabbar(),
+                        delegate: PersistentTabBar(),
                         pinned: true,
                       ),
                     ];
