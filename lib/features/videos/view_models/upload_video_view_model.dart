@@ -10,38 +10,40 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class UploadVideoViewModel extends AsyncNotifier<void> {
-  late final VideoRepository _repository;
+  late final VideosRepository _repository;
+
   @override
   FutureOr<void> build() {
-    _repository = ref.read(videoRepo);
+    _repository = ref.read(videosRepo);
   }
 
   Future<void> uploadVideo(File video, BuildContext context) async {
     final user = ref.read(authRepo).user;
     final userProfile = ref.read(usersProvider).value;
-    if (user != null) {
+    if (userProfile != null) {
       state = const AsyncValue.loading();
-      state = await AsyncValue.guard(
-        () async {
-          final task = await _repository.uploadVideoFile(video, user.uid);
-          if (task.metadata != null) {
-            await _repository.saveVideo(
-              VideoModel(
-                title: '파이어베이스 업로드 성공',
-                description: '나이스',
-                fileUrl: await task.ref.getDownloadURL(),
-                thumbnailUrl: '',
-                creatorUid: user.uid,
-                creator: userProfile!.name,
-                likes: 0,
-                comments: 0,
-                createdAt: DateTime.now().millisecondsSinceEpoch,
-              ),
-            );
-            context.pushReplacement('/home');
-          }
-        },
-      );
+      state = await AsyncValue.guard(() async {
+        final task = await _repository.uploadVideoFile(
+          video,
+          user!.uid,
+        );
+        if (task.metadata != null) {
+          await _repository.saveVideo(
+            VideoModel(
+              title: "From Flutter!",
+              description: "Hell yeah!",
+              fileUrl: await task.ref.getDownloadURL(),
+              thumbnailUrl: "",
+              creatorUid: user.uid,
+              likes: 0,
+              comments: 0,
+              createdAt: DateTime.now().millisecondsSinceEpoch,
+              creator: userProfile.name,
+            ),
+          );
+          context.pushReplacement("/home");
+        }
+      });
     }
   }
 }
