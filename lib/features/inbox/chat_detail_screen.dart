@@ -1,9 +1,11 @@
 import 'package:douyin_clone/constants/gaps.dart';
 import 'package:douyin_clone/constants/sizes.dart';
+import 'package:douyin_clone/features/inbox/view_models/messages_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ChatDetailScreen extends StatefulWidget {
+class ChatDetailScreen extends ConsumerStatefulWidget {
   static const String routeName = 'chatDetail';
   static const String routeURL = ':chatId';
 
@@ -11,12 +13,27 @@ class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key, required this.chatId});
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  ConsumerState<ChatDetailScreen> createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
+  final _editingController = TextEditingController();
+  @override
+  void dispose() {
+    _editingController.dispose();
+    super.dispose();
+  }
+
+  void _onSendPress() {
+    final text = _editingController.text;
+    if (text == '') return;
+    ref.read(messagesProvider.notifier).sendMessage(text);
+    _editingController.text = '';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(messagesProvider).isLoading;
     return Scaffold(
       appBar: AppBar(
         title: ListTile(
@@ -102,7 +119,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               bottom: 0,
               width: MediaQuery.of(context).size.width,
               child: BottomAppBar(
-                color: Colors.grey.shade50,
+                color: Colors.white,
                 child: Container(
                   color: Colors.grey.shade100,
                   child: Padding(
@@ -110,9 +127,10 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         vertical: Sizes.size10, horizontal: Sizes.size16),
                     child: Row(
                       children: [
-                        const Expanded(
+                        Expanded(
                           child: TextField(
-                            decoration: InputDecoration(
+                            controller: _editingController,
+                            decoration: const InputDecoration(
                                 suffixIcon: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,13 +162,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                         Gaps.h20,
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(Sizes.size10),
-                            child: FaIcon(
-                              FontAwesomeIcons.paperPlane,
+                          child: IconButton(
+                            onPressed: isLoading ? null : _onSendPress,
+                            icon: FaIcon(
+                              isLoading
+                                  ? FontAwesomeIcons.hourglass
+                                  : FontAwesomeIcons.paperPlane,
                             ),
                           ),
                         )
