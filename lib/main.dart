@@ -1,4 +1,5 @@
 import 'package:douyin_clone/constants/sizes.dart';
+import 'package:douyin_clone/features/notifications/notifications_provider.dart';
 import 'package:douyin_clone/features/videos/repos/video_config_repo.dart';
 import 'package:douyin_clone/features/videos/view_models/video_config_vm.dart';
 import 'package:douyin_clone/firebase_options.dart';
@@ -43,7 +44,7 @@ class TikTokApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // S.load(const Locale("en"));
+    ref.watch(notificationsProvider);
     return MaterialApp.router(
       routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
