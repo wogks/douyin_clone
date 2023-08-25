@@ -31,7 +31,7 @@ final messagesProvider = AsyncNotifierProvider<MessagesViewModel, void>(
   () => MessagesViewModel(),
 );
 
-final chatProvder = StreamProvider<List<MessageModel>>((ref) {
+final chatProvder = StreamProvider.autoDispose<List<MessageModel>>((ref) {
   final db = FirebaseFirestore.instance;
   return db
       .collection('chat_rooms')
